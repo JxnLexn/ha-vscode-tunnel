@@ -20,6 +20,8 @@ RUN apk add --no-cache \
     ripgrep \
     tar
 
+RUN sed -i 's#^\(root:[^:]*:[^:]*:[^:]*:[^:]*:[^:]*:\)/bin/ash$#\1/bin/bash#' /etc/passwd
+
 RUN case "${BUILD_ARCH}" in \
         amd64) cli_target="cli-alpine-x64" ;; \
         aarch64) cli_target="cli-alpine-arm64" ;; \

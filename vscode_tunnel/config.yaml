@@ -1,5 +1,5 @@
 name: VS Code Tunnel
-version: 0.1.1
+version: 0.1.2
 slug: vscode_tunnel
 description: Access your Home Assistant config through a Visual Studio Code Remote Tunnel.
 arch:

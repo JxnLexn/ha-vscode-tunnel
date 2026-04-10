@@ -35,13 +35,30 @@ mkdir -p \
 umask 077
 
 export HOME="${HOME_DIR}"
+export SHELL="/bin/bash"
 export VSCODE_CLI_DATA_DIR="${CLI_DATA_DIR}"
 export VSCODE_CLI_USE_FILE_KEYCHAIN=1
 export VSCODE_CLI_DISABLE_KEYCHAIN_ENCRYPT=1
 
+cat > "${HOME_DIR}/.bashrc" <<'EOF'
+if [[ $- == *i* ]] && [[ "${PWD}" == "${HOME}" ]] && [[ -d /homeassistant ]]; then
+    cd /homeassistant
+fi
+EOF
+
+cat > "${HOME_DIR}/.bash_profile" <<'EOF'
+if [[ -f "${HOME}/.bashrc" ]]; then
+    . "${HOME}/.bashrc"
+fi
+EOF
+
+ln -sfn "${WORKSPACE_DIR}" "${HOME_DIR}/homeassistant"
+ln -sfn "${WORKSPACE_DIR}" "${HOME_DIR}/config"
+
 bashio::log.info "Using workspace: ${WORKSPACE_DIR}"
 bashio::log.info "Tunnel name: ${tunnel_name}"
 bashio::log.info "Auth provider: ${provider}"
+bashio::log.info "Persistent VS Code data: ${SERVER_DATA_DIR}, ${EXTENSIONS_DIR}, ${CLI_DATA_DIR}"
 
 if code tunnel user show >/dev/null 2>&1; then
     bashio::log.info "Existing VS Code tunnel login found in /data."
