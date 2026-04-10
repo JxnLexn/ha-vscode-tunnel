@@ -10,6 +10,7 @@ RUN apk add --no-cache \
     ca-certificates \
     curl \
     git \
+    libc6-compat \
     libgcc \
     libstdc++ \
     nodejs \
@@ -20,19 +21,19 @@ RUN apk add --no-cache \
     tar
 
 RUN case "${BUILD_ARCH}" in \
-        amd64) cli_arch="x64" ;; \
-        aarch64) cli_arch="arm64" ;; \
-        armv7|armhf) cli_arch="armhf" ;; \
+        amd64) cli_target="cli-alpine-x64" ;; \
+        aarch64) cli_target="cli-alpine-arm64" ;; \
+        armv7|armhf) cli_target="cli-linux-armhf" ;; \
         "") \
             case "$(apk --print-arch)" in \
-                x86_64) cli_arch="x64" ;; \
-                aarch64) cli_arch="arm64" ;; \
-                armv7|armhf) cli_arch="armhf" ;; \
+                x86_64) cli_target="cli-alpine-x64" ;; \
+                aarch64) cli_target="cli-alpine-arm64" ;; \
+                armv7|armhf) cli_target="cli-linux-armhf" ;; \
                 *) echo "Unsupported Alpine architecture: $(apk --print-arch)" >&2; exit 1 ;; \
             esac ;; \
         *) echo "Unsupported Home Assistant architecture: ${BUILD_ARCH}" >&2; exit 1 ;; \
     esac \
-    && curl -LfsS "https://update.code.visualstudio.com/latest/cli-linux-${cli_arch}/stable" -o /tmp/vscode_cli.tar.gz \
+    && curl -LfsS "https://update.code.visualstudio.com/latest/${cli_target}/stable" -o /tmp/vscode_cli.tar.gz \
     && tar -xf /tmp/vscode_cli.tar.gz -C /usr/local/bin \
     && rm -f /tmp/vscode_cli.tar.gz \
     && chmod +x /usr/local/bin/code
