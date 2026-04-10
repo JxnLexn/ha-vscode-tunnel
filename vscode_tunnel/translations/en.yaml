@@ -1,0 +1,10 @@
+configuration:
+  provider:
+    name: Authentication provider
+    description: Choose whether the first tunnel login uses GitHub or Microsoft.
+  tunnel_name:
+    name: Tunnel name
+    description: Optional machine name shown in the VS Code Remote Explorer.
+  log_level:
+    name: Log level
+    description: Controls how much output the VS Code CLI prints into the add-on logs.
