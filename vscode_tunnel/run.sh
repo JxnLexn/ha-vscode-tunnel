@@ -1,7 +1,7 @@
 #!/usr/bin/with-contenv bashio
 set -euo pipefail
 
-readonly WORKSPACE_DIR="/homeassistant"
+readonly WORKSPACE_DIR="/config"
 readonly DATA_ROOT="/data"
 readonly HOME_DIR="${DATA_ROOT}/home"
 readonly CLI_DATA_DIR="${DATA_ROOT}/vscode-cli"
@@ -41,8 +41,8 @@ export VSCODE_CLI_USE_FILE_KEYCHAIN=1
 export VSCODE_CLI_DISABLE_KEYCHAIN_ENCRYPT=1
 
 cat > "${HOME_DIR}/.bashrc" <<'EOF'
-if [[ $- == *i* ]] && [[ "${PWD}" == "${HOME}" ]] && [[ -d /homeassistant ]]; then
-    cd /homeassistant
+if [[ $- == *i* ]] && [[ "${PWD}" == "${HOME}" ]] && [[ -d /config ]]; then
+    cd /config
 fi
 EOF
 
@@ -51,9 +51,6 @@ if [[ -f "${HOME}/.bashrc" ]]; then
     . "${HOME}/.bashrc"
 fi
 EOF
-
-ln -sfn "${WORKSPACE_DIR}" "${HOME_DIR}/homeassistant"
-ln -sfn "${WORKSPACE_DIR}" "${HOME_DIR}/config"
 
 bashio::log.info "Using workspace: ${WORKSPACE_DIR}"
 bashio::log.info "Tunnel name: ${tunnel_name}"

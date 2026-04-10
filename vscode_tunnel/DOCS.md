@@ -4,7 +4,7 @@ This add-on starts the official Visual Studio Code CLI and exposes your Home Ass
 
 ## What this add-on does
 
-- Mounts your Home Assistant configuration into the container at `/homeassistant`
+- Mounts your Home Assistant configuration into the container at `/config`
 - Starts the official `code tunnel` process in that directory
 - Persists tunnel login data, server data, extensions, and CLI state in `/data`
 - Lets you connect from `vscode.dev` or the VS Code Remote Explorer
@@ -54,17 +54,11 @@ After the first successful login, the credentials stay in `/data` and survive ad
 
 ## Accessing the Home Assistant files
 
-The real Home Assistant configuration is mounted at `/homeassistant`.
+The Home Assistant configuration is mounted at exactly one path inside the add-on:
 
-If the remote window initially opens in your home directory, use one of these locations:
+- `/config`
 
-- `/homeassistant`
-- `~/homeassistant`
-- `~/config`
-
-The `~/homeassistant` and `~/config` entries are symlinks that point to the mounted Home Assistant configuration.
-
-Integrated terminals use `bash` and switch into `/homeassistant` automatically when they start from the default home directory.
+Integrated terminals use `bash` and switch into `/config` automatically when they start from the default home directory.
 
 ## Changing the provider
 

@@ -1,5 +1,5 @@
 name: VS Code Tunnel
-version: 0.1.2
+version: 0.1.3
 slug: vscode_tunnel
 description: Access your Home Assistant config through a Visual Studio Code Remote Tunnel.
 arch:
@@ -17,7 +17,7 @@ ports: {}
 ports_description: {}
 map:
   - type: homeassistant_config
-    path: /homeassistant
+    path: /config
     read_only: false
 options:
   provider: github
